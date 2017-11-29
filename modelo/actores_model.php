@@ -9,7 +9,7 @@ class actores_model{
     }
     
    public function get_actores(){
-        $sql="SELECT * FROM `vpeliculasdirector`";
+        $sql="SELECT * FROM `vactores`";
         foreach ($this->db->query($sql) as $res)
         {
             $this->actores[]=$res;
@@ -17,5 +17,10 @@ class actores_model{
         return $this->actores;
         $this->db=null;
     } 
+    
+    public function insertar_actor($nombre){
+        $sql="CALL insrtarActor('$nombre');";
+        $this->db->query($sql);
+    }
 }
 

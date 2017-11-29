@@ -15,7 +15,8 @@
         
         <section>
             <p id="mostrarPelis"><a href="../vista/listadoPeliculas.php">Ver Peliculas</a></p>
-            <p><a href="../controlador/controladorListadoActores.php">Ver Actores</a></p>
+            <p><a href="../vista/listadoActores.php">Ver Actores</a></p>
+            <p><a href="../vista/menuGestion.php">Gestion</a></p>
         </section>
     </body>
 </html>

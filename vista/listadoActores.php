@@ -10,11 +10,11 @@
 session_start();
 ?>
     <p>Hola, <?php echo $_SESSION['username']; ?> <a href='../controlador/logout.php'>salir</a></p>
-    <h1>Peliculas</h1>
+    <h1>Actores</h1>
 
     <div id="Actores">
         
     </div>
         
 </body>
-</html
+</html>
