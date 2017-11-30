@@ -98,6 +98,16 @@ $(document).ready(function(){
             opcion = "ModificarActuacion";
         });
         
+        $("#ElminarActuacion").click(function(){
+            ocultarFormu();
+            $("#fomu").show();
+            $("#selectPeliculaActuacion").show();
+            $("#selectActor").show();
+            $("#zonaActuacion").show();
+            $('.valores').attr("disabled", true);
+            opcion = "ElminarActuacion";
+        });
+        
         ///AL hacer submit
         
         $('#Guardar').click(function(){
@@ -131,6 +141,12 @@ $(document).ready(function(){
                 funcionEliminarPelicula();
                 break;
             case "":
+                
+                break;
+            case "":
+                
+                break;
+            case "ElminarActuacion":
                 
                 break;
                     }

@@ -36,6 +36,7 @@ session_start();
         <button id="EliminarPelicula">Eliminar Pelicula</button>
         <button id="EliminarActor">Eliminar Actor</button>
         <button id="ElminarDirector">Eliminar</button>
+        <button id="ElminarActuacion">Eliminar Actuacion</button>
     </div>
     
     <div id="fomu">
@@ -60,8 +61,8 @@ session_start();
             <p id="selectPeliculaActuacion"><label>Pelicula</label><select id="comboPeliculasActuacion"></select></p>
             <p>
                 Protagonista 
-                <input type="radio" name="protagonista" value="1"> Si
-                <input type="radio" name="protagonista" value="0"> No
+                <input type="radio" name="protagonista" value="1" class="valores"> Si
+                <input type="radio" name="protagonista" value="0" class="valores"> No
             </p>
         </div>
         
