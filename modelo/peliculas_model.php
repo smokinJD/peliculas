@@ -11,7 +11,7 @@ class peliculas_model{
     }
     
     public function get_peliculas(){
-        $sql="SELECT * FROM `vpeliculasdirector`";
+        $sql="SELECT vista1.*, vista2.actores FROM `vpeliculasdirector` vista1 LEFT JOIN `vpeliculasactores` vista2 ON vista1.Titulo=vista2.Titulo";
         foreach ($this->db->query($sql) as $res)
         {
             $this->peliculas[]=$res;

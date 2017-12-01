@@ -1,0 +1,43 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+h1{
+    text-align: center;
+}
+
+/*Listado Peliculas*/
+#Peliculas{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+#Peliculas .peli{
+    width: 100%;
+    display: block;
+    padding: 10px;
+    float: left;
+    clear: all;
+}
+
+#Peliculas h3{
+    width: 100%;
+    float: left;
+    color: #006666;
+}
+
+#Peliculas img{
+    width: 30%;
+    float: left;
+    border-radius: 5px;
+}
+
+#Peliculas .informacion{
+    width: 70%;
+    float: left;
+}
+
+#Peliculas .anio, .director, .actores, .sipnosis{
+    text-align: left;
+    margin: 10px;
+}

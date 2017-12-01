@@ -22,11 +22,13 @@ $(document).ready(function(){
         $("#Insertar").click(function(){
             ocultar();
             $("#gestionInsertar").show();
+            $('.valores').attr("disabled", false);
         });
         
         $("#Modificar").click(function(){
             ocultar();
             $("#gestionModificar").show();
+            $('.valores').attr("disabled", false);
         });
         
         $("#Eliminar").click(function(){
@@ -40,26 +42,27 @@ $(document).ready(function(){
             $("#fomu").show();
             $("#zonaPelicula").show();
             $("#selectDirector").show();
+            $('#selectDirector').appendTo('#zonaPelicula');
             opcion = "InsertarPelicula";
         });
         
         $("#ModificarPelicula").click(function(){
             ocultarFormu();
             $("#fomu").show();
-            $('#selectPelicula').prependTo('#zonaPelicula');
             $("#zonaPelicula").show();
             $("#selectDirector").show();
             $("#selectPelicula").show();
+            $('#selectDirector').appendTo('#zonaPelicula');
             opcion = "ModificarPelicula";
         });
         
         $("#EliminarPelicula").click(function(){
             ocultarFormu();
             $("#fomu").show();
-            $('#selectPelicula').prependTo('#zonaPelicula');
             $("#zonaPelicula").show();
             $("#selectDirector").show();
             $("#selectPelicula").show();
+            $('#selectDirector').appendTo('#zonaPelicula');
             $('.valores').attr("disabled", true);
             opcion = "EliminarPelicula";
         });
@@ -72,11 +75,48 @@ $(document).ready(function(){
             opcion = "InsertarActor";
         });
         
+        $("#ModificarActor").click(function(){
+            ocultarFormu();
+            $("#fomu").show();
+            $("#selectActor").show();
+            $("#zonaDirectorActor").show();
+            opcion = "ModificarActor";
+        });
+        
+        $("#EliminarActor").click(function(){
+            ocultarFormu();
+            $("#fomu").show();
+            $("#selectActor").show();
+            $("#zonaDirectorActor").show();
+            opcion = "EliminarActor";
+        });
+        
+        //BOTONES DIRECTOR
         $("#InsertarDirector").click(function(){
             ocultarFormu();
             $("#fomu").show();
             $("#zonaDirectorActor").show();
             opcion = "InsertarDirector";
+        });
+        
+        $("#ModificarDirector").click(function(){
+            ocultarFormu();
+            $("#fomu").show();
+            $("#zonaDirectorActor").show();
+            $('#selectDirector').appendTo('#combos');
+            $('#selectDirector').show();
+            opcion = "ModificarDirector";
+        });
+        
+        $("#ElminarDirector").click(function(){
+            ocultarFormu();
+            $("#fomu").show();
+            $("#zonaDirectorActor").show();
+            $('#selectDirector').appendTo('#combos');
+            $('#selectDirector').show();
+            $('.valores').attr("disabled", true);
+            $('#comboDirector').attr("disabled", false);
+            opcion = "ElminarDirector";
         });
         
         //Botones Actuaciones
@@ -86,6 +126,7 @@ $(document).ready(function(){
             $("#selectPelicula").show();
             $("#selectActor").show();
             $("#zonaActuacion").show();
+            $("#anadirActuacion").show();
             opcion = "InsertarActuacion";
         });
         
@@ -129,25 +170,28 @@ $(document).ready(function(){
             case "ModificarPelicula":
                 funcionModificarPelicula();
                 break;
-            case "":
+            case "ModificarActor":
+                
+                break;
+            case "ModificarDirector":
                 
                 break;
             case "ModificarActuacion":
-                
+                funcionModificarActuaciones();
                 break;
             
             //case Borrrar
             case "EliminarPelicula":
                 funcionEliminarPelicula();
                 break;
-            case "":
+            case "EliminarActor":
                 
                 break;
-            case "":
+            case "ElminarDirector":
                 
                 break;
             case "ElminarActuacion":
-                
+                funcionEliminarActuacion();
                 break;
                     }
     });
@@ -167,11 +211,15 @@ $(document).ready(function(){
                 midato=JSON.parse(datos);
                          
              $.each( midato, function(i,dato) {
-                nuevo += "<div id='"+dato.idPelicula+"'>";
+                nuevo += "<div class='peli'>";
 	        nuevo += "<h3 class='titulo'>"+ dato.Titulo +"</h3>";
                 nuevo+="<img src='../img/"+dato.Cartel+"' width='200px'>";
-		nuevo+="<p class='anio'>"+dato.Anyo+"</p>";
-                nuevo+="<p class='director'>"+dato.Director+"</p>";
+                nuevo += "<div class='informacion'>";
+		nuevo+="<p class='anio'>Año: "+dato.Anyo+"</p>";
+                nuevo+="<p class='director'>Director: "+dato.Director+"</p>";
+                nuevo+="<p class='actores'>Actores: "+dato.actores+"</p>";
+                nuevo+="<p class='sipnosis'>Sipnosis: <br><br>"+dato.sipnosis+"</p>";
+                nuevo += "</div>";
                 nuevo += "</div>";
             });
                 $('#Peliculas').append(nuevo).hide().fadeIn('slow');
@@ -284,9 +332,11 @@ $(document).ready(function(){
             MiId=$('#comboActores').val();
             NombreActor=$('#comboActores option:selected').html();
               
+            $('#idDirectorActor').val(MiId);
             $('#nombreDirectorActor').val(NombreActor);
             CargarComboPeliculasActuacion(MiId);
-    });         
+            $("input:radio").attr('checked', false);
+    });    
             
     
 //cargar combo Directores
@@ -342,11 +392,10 @@ $(document).ready(function(){
              };
     
     $('#comboPeliculasActuacion').change(function(){
-         
+            
             MiId=$('#comboPeliculasActuacion').val();
             protagonista=$('#comboPeliculasActuacion option:selected').attr('data-protagonista');
-            
-            if (protagonista===true){
+            if (protagonista==='1'){
                 $("input:radio[value=1]").attr('checked', true);
             }else{
                 $("input:radio[value=0]").attr('checked', true);
@@ -467,6 +516,28 @@ function funcionModificarPelicula(){
               };
 
 
+//Modificar Actuaciones
+
+function funcionModificarActuaciones(){
+                pelicula = $('#comboPeliculasActuacion').val();
+                actores= $('#comboActores').val();
+                protagonista = $("input:radio[name=protagonista]:checked").val();
+                  $.ajax({
+                   type:'POST',
+                   data:"submit=&Pelicula="+pelicula+"&Actor="+actores+"&protagonista="+protagonista,
+                   dstaType:'json',
+                   url:"../controlador/controladorModificarActuacion.php",
+                success:function(datos) {
+                    alert("Se ha Modificado con exito");
+                    alert(datos);
+                    }, 
+                    error: function(xhr){
+                    alert("An error occured: " + xhr.status + " " + xhr.statusText);  
+                 }  
+                 });                 
+                    vaciar();
+                    CargarComboActor();
+              };
 
 
 //BORRAR
@@ -495,6 +566,31 @@ function funcionEliminarPelicula(){
                 vaciar();   
            };
 
+
+//Modificar Actuaciones
+
+function funcionEliminarActuacion(){
+                pelicula = $('#comboPeliculasActuacion').val();
+                actores= $('#comboActores').val();
+                  $.ajax({
+                   type:'POST',
+                   data:"submit=&Pelicula="+pelicula+"&Actor="+actores,
+                   dstaType:'json',
+                   url:"../controlador/controladorEliminarActuacion.php",
+                success:function(datos) {
+                alert("Se ha eliminado con exito");
+               
+                }, 
+                error: function(xhr){
+                alert("An error occured: " + xhr.status + " " + xhr.statusText);  
+                }  
+                });                 
+                $('.valores').attr("disabled", false);
+                ocultar();
+                vaciar();   
+            };
+              
+
     //funcion Ocultar div
         function ocultar(){
              //$("#gestion").hide();
@@ -513,6 +609,7 @@ function funcionEliminarPelicula(){
              $("#selectActor").hide();
              $("#selectPelicula").hide();
              $("#selectPeliculaActuacion").hide();
+             $("#anadirActuacion").hide();
          }
     
     //vaciar Input
