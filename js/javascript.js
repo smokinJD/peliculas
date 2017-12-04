@@ -149,6 +149,11 @@ $(document).ready(function(){
             opcion = "ElminarActuacion";
         });
         
+        //Boton Añadir Actores en actuacion
+        $("#anadirActuacion").click(function(){
+            //$("#zonaActuacion").clone().appendTo("#fomu");
+        });
+        
         ///AL hacer submit
         
         $('#Guardar').click(function(){
@@ -171,7 +176,7 @@ $(document).ready(function(){
                 funcionModificarPelicula();
                 break;
             case "ModificarActor":
-                
+                funcionModificarActor();
                 break;
             case "ModificarDirector":
                 
@@ -185,10 +190,10 @@ $(document).ready(function(){
                 funcionEliminarPelicula();
                 break;
             case "EliminarActor":
-                
+                funcionEliminarActor();
                 break;
             case "ElminarDirector":
-                
+                funcionEliminarDirector();
                 break;
             case "ElminarActuacion":
                 funcionEliminarActuacion();
@@ -514,6 +519,50 @@ function funcionModificarPelicula(){
                  });                 
                     vaciar();
               };
+              
+//Modificar Actor
+
+function funcionModificarActor(){
+                id = $('#idDirectorActor').val();
+                nombre = $('#nombreDirectorActor').val();
+                
+                $.ajax({
+                   type:'POST',
+                   data:"submit=&Nombre="+nombre+"&Id="+id,
+                   dstaType:'json',
+                   url:"../controlador/controladorModificarActor.php",
+                success:function(datos) {
+                    alert("Se ha modificado con exito");
+                    alert(datos);
+                    }, 
+                    error: function(xhr){
+                    alert("An error occured: " + xhr.status + " " + xhr.statusText);  
+                 }  
+                 });                 
+                    vaciar();
+              };
+              
+//Modificar Director
+
+function funcionModificarDirector(){
+                id = $('#idDirectorActor').val();
+                nombre = $('#nombreDirectorActor').val();
+                
+                $.ajax({
+                   type:'POST',
+                   data:"submit=&Nombre="+nombre+"&Id="+id,
+                   dstaType:'json',
+                   url:"../controlador/controladorModificarDirector.php",
+                success:function(datos) {
+                    alert("Se ha modificado con exito");
+                    alert(datos);
+                    }, 
+                    error: function(xhr){
+                    alert("An error occured: " + xhr.status + " " + xhr.statusText);  
+                 }  
+                 });                 
+                    vaciar();
+              };
 
 
 //Modificar Actuaciones
@@ -566,6 +615,55 @@ function funcionEliminarPelicula(){
                 vaciar();   
            };
 
+    
+//BORRAR Actor
+function funcionEliminarActor(){
+              
+              id = $('#idDirectorActor').val();
+              confirmar = confirm("Seguro que desea borrar el registro? ");
+              if(!confirmar){ return false}
+               $.ajax({
+               type:'POST',
+              data:{data:id},
+              dstaType:'json',
+              url:"../controlador/controladorEliminarActor.php",
+            success:function(datos) {
+               alert("Se ha eliminado con exito");
+               
+                }, 
+                error: function(xhr){
+                alert("An error occured: " + xhr.status + " " + xhr.statusText);  
+             }  
+             });                 
+                $('.valores').attr("disabled", false);
+                ocultar();
+                vaciar();   
+           };
+
+
+//BORRAR DIRECTOR
+function funcionEliminarDirector(){
+              
+              id = $('#idDirectorActor').val();
+              confirmar = confirm("Seguro que desea borrar el registro? ");
+              if(!confirmar){ return false}
+               $.ajax({
+               type:'POST',
+              data:{data:id},
+              dstaType:'json',
+              url:"../controlador/controladorEliminarDirector.php",
+            success:function(datos) {
+               alert("Se ha eliminado con exito");
+               
+                }, 
+                error: function(xhr){
+                alert("An error occured: " + xhr.status + " " + xhr.statusText);  
+             }  
+             });                 
+                $('.valores').attr("disabled", false);
+                ocultar();
+                vaciar();   
+           };
 
 //Modificar Actuaciones
 

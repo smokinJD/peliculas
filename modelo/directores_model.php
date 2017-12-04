@@ -22,5 +22,15 @@ class directores_model{
         $sql="CALL insertarDirector('$nombre');";
         $this->db->query($sql);
     }
+    
+    public function modificar_director($nombre, $id){
+        $sql="CALL modificarActor('$nombre', $id);";
+        $this->db->query($sql);
+    }
+    
+    public function eliminar_director($id){
+        $sql="DELETE FROM `directores` WHERE idPelicula='$id'";
+        $this->db->query($sql);
+    }
 }
 

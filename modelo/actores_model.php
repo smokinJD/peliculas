@@ -22,5 +22,15 @@ class actores_model{
         $sql="CALL insrtarActor('$nombre');";
         $this->db->query($sql);
     }
+    
+    public function modificar_actor($nombre, $id){
+        $sql="CALL modificarActor('$nombre', $id);";
+        $this->db->query($sql);
+    }
+    
+    public function eliminar_actor($id){
+        $sql="DELETE FROM `actores` WHERE idPelicula='$id'";
+        $this->db->query($sql);
+    }
 }
 
