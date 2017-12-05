@@ -1,5 +1,6 @@
 $(document).ready(function(){
    var opcion = "";
+   var vueltas = 1;
    
    //Al Cargar listadoPeliculas
    $("listadoPeliculas.php").ready(function(){
@@ -151,7 +152,9 @@ $(document).ready(function(){
         
         //Boton Añadir Actores en actuacion
         $("#anadirActuacion").click(function(){
-            //$("#zonaActuacion").clone().appendTo("#fomu");
+            $("#mas").show();
+            anadirActorActuacion();
+            
         });
         
         ///AL hacer submit
@@ -303,6 +306,7 @@ $(document).ready(function(){
             Director=$('#comboPeliculas option:selected').attr('data-director');
               
             $('#idPeli').val(MiId);
+            $('.clonePeliculas').val(MiId);
             $('#tituloPeli').val(Titulo);
             $('#anyoPeli').val(Anyo);
             $('#comboDirector').val(Director);
@@ -476,11 +480,34 @@ $(document).ready(function(){
 //Insertar Actuaciones
     function funcionInsertarActuacion(){
                 pelicula = $('#comboPeliculas').val();
-                actores= $('#comboActores').val();
-                protagonista = $("input:radio[name=protagonista]:checked").val();
+                protagonista = $("input:radio[name=protagonista0]:checked").val();
+                
+                arrayActores = [];
+              $('.actorActu').each(function(index){
+                  actor = $(this).val();
+                  item = {};
+                  item ['Actor'] = actor;
+                  arrayActores.push(item);
+                  
+              });
+              
+               arrayProtagonista= [];
+              $('.protagonista').each(function(i,index){
+                  prota = $("input:radio[name=protagonista"+i+"]:checked").val();
+                  item = {};
+                  item ['Protagonista'] = prota;
+                  arrayProtagonista.push(item);
+                  
+              });
+              
+              var json = {"Pelicula":pelicula,arrayActores, arrayProtagonista};
+              var jsonModulos = JSON.stringify(json);
+              
+              alert (jsonModulos);
+              
                   $.ajax({
                    type:'POST',
-                   data:"submit=&Pelicula="+pelicula+"&Actor="+actores+"&protagonista="+protagonista,
+                   data:{data:jsonModulos},
                    dstaType:'json',
                    url:"../controlador/controladorInsertarActuacion.php",
                 success:function(datos) {
@@ -494,6 +521,7 @@ $(document).ready(function(){
                     vaciar();
                     CargarComboPeliculas();
                     CargarComboActor();
+                    vueltas=1;
               };
               
 //MODIFICAR
@@ -570,7 +598,7 @@ function funcionModificarDirector(){
 function funcionModificarActuaciones(){
                 pelicula = $('#comboPeliculasActuacion').val();
                 actores= $('#comboActores').val();
-                protagonista = $("input:radio[name=protagonista]:checked").val();
+                protagonista = $("input:radio[name=protagonista0]:checked").val();
                   $.ajax({
                    type:'POST',
                    data:"submit=&Pelicula="+pelicula+"&Actor="+actores+"&protagonista="+protagonista,
@@ -689,6 +717,22 @@ function funcionEliminarActuacion(){
             };
               
 
+
+//Funcion Añadir Actores en Actuacion
+
+    function anadirActorActuacion(){
+        MiId=$('#comboPeliculas').val();
+        protagonista= "<p class='protagonista'> Protagonista <input type='radio' name='protagonista"+vueltas+"' value='1' class='valores'> Si <input type='radio' name='protagonista"+vueltas+"' value='0' class='valores'> No</p>";
+        $("#selectPelicula").clone().appendTo("#mas");
+        $("#selectActor").clone().appendTo("#mas");
+        $("#mas #comboPeliculas").attr("class", "clonePeliculas");
+        $(".clonePeliculas").attr("disabled", true);
+        $('.clonePeliculas').val(MiId);
+        $(protagonista).appendTo("#mas");
+        vueltas++;
+    }
+    
+    
     //funcion Ocultar div
         function ocultar(){
              //$("#gestion").hide();
@@ -708,12 +752,14 @@ function funcionEliminarActuacion(){
              $("#selectPelicula").hide();
              $("#selectPeliculaActuacion").hide();
              $("#anadirActuacion").hide();
+             $("#mas").hide();
          }
     
     //vaciar Input
     function vaciar(){
         $('input:text').val("");
         $(':input[type="number"]').val("");
+        $("#mas").html("");
     }
 });
 

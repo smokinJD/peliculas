@@ -42,7 +42,7 @@ session_start();
     <div id="fomu">
         <div id="combos">
             <p id="selectPelicula"><label>Pelicula</label><select id="comboPeliculas"></select></p>
-            <p id="selectActor"><label>Actores</label><select id="comboActores"></select></p>
+            <p id="selectActor"><label>Actores</label><select id="comboActores" class="actorActu"></select></p>
             <p id="selectDirector"><label>Director</label><select id="comboDirector" class="valores"></select></p>
         </div>
         
@@ -59,12 +59,15 @@ session_start();
         
         <div id="zonaActuacion">
             <p id="selectPeliculaActuacion"><label>Pelicula</label><select id="comboPeliculasActuacion"></select></p>
-            <p>
+            <p class="protagonista">
                 Protagonista 
-                <input type="radio" name="protagonista" value="1" class="valores"> Si
-                <input type="radio" name="protagonista" value="0" class="valores"> No
-                <button id="anadirActuacion">Añadir Otro</button>
+                <input type="radio" name="protagonista0" value="1" class="valores"> Si
+                <input type="radio" name="protagonista0" value="0" class="valores"> No
+                <button id="anadirActuacion">+</button>
             </p>
+            <div id="mas">
+                
+            </div>
         </div>
         
         <input type="button" value="aceptar" id="Guardar">
