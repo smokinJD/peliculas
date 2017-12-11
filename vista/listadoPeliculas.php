@@ -10,9 +10,11 @@
 <?php
 session_start();
 ?>
+    <header>
     <p>Hola, <?php echo $_SESSION['username']; ?> <a href='../controlador/logout.php'>salir</a></p>
     <h1>Peliculas</h1>
-
+    <img src="../img/logo.jpg"/>
+    </header>
     <div id="Peliculas">
         
     </div>

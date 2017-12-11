@@ -1,11 +1,32 @@
 body{
     margin: 0;
     padding: 0;
+    background-image: url('../img/cine.jpg');
+    background-position-x: -150px;
 }
 h1{
     text-align: center;
+    color: white;
+    font-size: 80px;
+    font-style: italic;
+    float: left;
 }
 
+header{
+    width: 100%;
+    text-align: center;
+    float: left;
+    clear: all;
+}
+header p{
+    color: white;
+    text-align: left;
+}
+
+img{
+    width: 200px;
+    float: left;
+}
 /*Listado Peliculas*/
 #Peliculas{
     width: 80%;
@@ -17,6 +38,7 @@ h1{
     display: block;
     padding: 10px;
     float: left;
+    background-color: white;
     clear: all;
 }
 
