@@ -241,35 +241,39 @@ $(document).ready(function(){
 
          
 // Consulta de Actores         
-        function mostrarActores(){
-         $('#Actores').html(' ');
-                $.ajax({
-                    type:'POST',
-                    dstaType:'json',
-                    url:"../controlador/controladorListadoActores.php",
-            success:function(datos) {
-                var tabla="<table>";
-               tabla+="<th>Nombre</th>\n\
-               <th>Peliculas</th>\n\
-               <th>Veces Protagonista</th>";
-                midato=JSON.parse(datos);
-                         
-             $.each( midato, function(i,dato) {
-                tabla+="<tr>";
-                tabla+="<td class='actor'>"+dato.Nombre+"</td>";
-		tabla+="<td class='peliculasActores'>"+dato.peliculas+"</td>";
-                tabla+="<td class='protagonista'>"+dato.protagonista+"</td>";
-                tabla+="</tr>";
-            });
-                tabla+="</table>";
-                $('#Actores').append(tabla).hide().fadeIn('slow');
-                return false;
-            }, 
-        error: function(xhr){
-                alert("An error occured: " + xhr.status + " " + xhr.statusText);  
-             }           
-             });	
-         };
+         function mostrarActores(){
+             //orden = $("input:radio[name=orden]:checked").val();
+             borrarOrden = $("input:submit[name=borrarOrden]").val();
+             alert(orden);
+              $('#Actores').html(' ');
+                     $.ajax({
+                         type:'POST',
+                         data:"submit=&orede="+orden+"&borrarOrden="+borrarOrden,
+                         dstaType:'json',
+                         url:"../controlador/controladorListadoActores.php",
+                 success:function(datos) {
+                     var tabla="<table>";
+                    tabla+="<th>Nombre</th>\n\
+                    <th>Peliculas</th>\n\
+                    <th>Veces Protagonista</th>";
+                     midato=JSON.parse(datos);
+                              
+                  $.each( midato, function(i,dato) {
+                     tabla+="<tr>";
+                     tabla+="<td class='actor'>"+dato.Nombre+"</td>";
+     		tabla+="<td class='peliculasActores'>"+dato.peliculas+"</td>";
+                     tabla+="<td class='protagonista'>"+dato.protagonista+"</td>";
+                     tabla+="</tr>";
+                 });
+                     tabla+="</table>";
+                     $('#Actores').append(tabla).hide().fadeIn('slow');
+                     return false;
+                 }, 
+             error: function(xhr){
+                     alert("An error occured: " + xhr.status + " " + xhr.statusText);  
+                  }           
+                  });	
+              };
          
          
          

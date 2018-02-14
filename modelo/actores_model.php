@@ -8,14 +8,14 @@ class actores_model{
         $this->db = conectar::conexion();
     }
     
-   public function get_actores(){
-        $sql="SELECT * FROM `vactores`";
-        foreach ($this->db->query($sql) as $res)
-        {
-            $this->actores[]=$res;
-        }
-        return $this->actores;
-        $this->db=null;
+    public function get_actores($orden){
+    	$sql="SELECT * FROM `vactores` $orden";
+    	foreach ($this->db->query($sql) as $res)
+    	{
+    		$this->actores[]=$res;
+    	}
+    	return $this->actores;
+    	$this->db=null;
     } 
     
     public function insertar_actor($nombre){

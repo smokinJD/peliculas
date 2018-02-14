@@ -13,6 +13,27 @@ session_start();
     <p>Hola, <?php echo $_SESSION['username']; ?> <a href='../controlador/logout.php'>salir</a></p>
     <h1>Actores</h1>
 
+<!-- 	sirve para Ordenar la lista que van con cookies -->
+	<fieldset>
+      <legend>Ordenar por:</legend>
+
+
+      <form method="post" action="../vista/listadoActores.php">
+        <label class="radio-inline">
+          <input type="radio" name="orden"
+          <?php if (isset($_COOKIE["orden"]) && $_COOKIE["orden"]=="nombre") echo "checked";?>
+          value="nombre">Actor
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="orden"
+          <?php if (isset($_COOKIE["orden"]) && $_COOKIE["orden"]=="pelicula") echo "checked";?>
+          value="pelicula">Pelicula
+        </label>
+        <button type="submit" class="btn btn-default">Buscar</button>
+        <button type="submit" class="btn btn-default" name="borrarOrden">Borrar Orden</button>
+      </form>
+    </fieldset>
+    <br>
     <div id="Actores">
         
     </div>
