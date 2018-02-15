@@ -1,7 +1,9 @@
 $(document).ready(function(){
    var opcion = "";
    var vueltas = 1;
-   
+   orden= "";
+   borrarOrden="";
+   alert(orden);
    //Al Cargar listadoPeliculas
    $("listadoPeliculas.php").ready(function(){
       mostrarPeliculas(); 
@@ -9,7 +11,15 @@ $(document).ready(function(){
     
    //Al Cargar listadoActores
    $("listadoActores.php").ready(function(){
-      mostrarActores(); 
+       mostrarActores(); 
+       
+       $("#orden").submit(function () {
+             orden = $("form:input:radio[name=orden]:checked").val();
+             //borrarOrden = $("input:submit[name=borrarOrden]").val();
+             
+             mostrarActores(orden); 
+        });
+      
    });
  
     //al cargar Menu gestion
@@ -241,14 +251,12 @@ $(document).ready(function(){
 
          
 // Consulta de Actores         
-         function mostrarActores(){
-             //orden = $("input:radio[name=orden]:checked").val();
-             borrarOrden = $("input:submit[name=borrarOrden]").val();
+         function mostrarActores(orden){
              alert(orden);
               $('#Actores').html(' ');
                      $.ajax({
                          type:'POST',
-                         data:"submit=&orede="+orden+"&borrarOrden="+borrarOrden,
+                         data:"submit=&orden="+orden+"&borrarOrden="+borrarOrden,
                          dstaType:'json',
                          url:"../controlador/controladorListadoActores.php",
                  success:function(datos) {

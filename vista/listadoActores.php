@@ -4,7 +4,7 @@
     <title>Listado Actores</title>
     <script src="../js/jquery-3.2.1.min.js" type="text/javascript"></script>
     <script src="../js/javascript.js" type="text/javascript"></script>
-    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="../css/style.css" rel="stylesheet" type="text/css"/>-->
 </head>
 <body>
 <?php
@@ -18,7 +18,7 @@ session_start();
       <legend>Ordenar por:</legend>
 
 
-      <form method="post" action="../vista/listadoActores.php">
+      <form id="orden">
         <label class="radio-inline">
           <input type="radio" name="orden"
           <?php if (isset($_COOKIE["orden"]) && $_COOKIE["orden"]=="nombre") echo "checked";?>
